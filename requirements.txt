@@ -1,4 +1,4 @@
 streamlit
 gunicorn
-torch
+pytorch
 transformers

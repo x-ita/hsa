@@ -2,3 +2,4 @@ streamlit
 gunicorn
 torch
 transformers
+sentencepiece

@@ -4,3 +4,5 @@ uvicorn
 torch
 transformers
 sentencepiece
+pandas
+scikit-learn

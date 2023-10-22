@@ -38,3 +38,7 @@ class SentenceLukeJapanese:
 
 MODEL_NAME = "sonoisa/sentence-luke-japanese-base-lite"
 model = SentenceLukeJapanese(MODEL_NAME)
+
+# 埋め込みモデルの読み込み
+with open('models/sentence-luke-japanese-base-lite', 'wb') as f:
+    pickle.dump(model, f)

@@ -1,6 +1,6 @@
 fastapi
 streamlit
-gunicorn
+uvicorn
 torch
 transformers
 sentencepiece

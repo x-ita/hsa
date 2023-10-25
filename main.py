@@ -41,7 +41,7 @@ MODEL_NAME = "sonoisa/sentence-luke-japanese-base-lite"
 model = SentenceLukeJapanese(MODEL_NAME)
 
 # チャンクデータの読み込み
-chunk_df = pd.read_picklle('chunk_df.pkl')
+chunk_df = pd.read_pickle('chunk_df.pkl')
 
 # Vector DBの読み込み
 with open('vecdb', 'rb') as f:

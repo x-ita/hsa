@@ -45,7 +45,7 @@ chunk_df = pd.read_pickle('chunk_df.pkl')
 
 # Vector DBの読み込み
 with open('vecdb', 'rb') as f:
-    vecdb = picle.load(f) 
+    vecdb = pickle.load(f) 
 
 # インスタンス化
 app = FastAPI()

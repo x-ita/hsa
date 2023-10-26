@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
 import torch
 from transformers import MLukeTokenizer, LukeModel
 import pickle

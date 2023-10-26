@@ -42,11 +42,11 @@ MODEL_NAME = "sonoisa/sentence-luke-japanese-base-lite"
 #model = SentenceLukeJapanese(MODEL_NAME)
 
 # チャンクデータの読み込み
-chunk_df = pd.read_pickle('chunk_df.pkl')
+#chunk_df = pd.read_pickle('chunk_df.pkl')
 
 # Vector DBの読み込み
-with open('vecdb', 'rb') as f:
-    vecdb = pickle.load(f) 
+#with open('vecdb', 'rb') as f:
+#    vecdb = pickle.load(f) 
 
 def cosine_similarity(matrix1, matrix2):
     # 各行列のL2ノルム（ユークリッド距離）を計算
@@ -68,4 +68,4 @@ def index():
 # POST が送信された時（入力）と予測値（出力）の定義
 @app.post('/predict')
 def make_predictions(features: iris):
-    return({'prediction':model.encode(text)})
+    return({'prediction':'0,1,2のどれか'})

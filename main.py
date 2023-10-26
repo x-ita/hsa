@@ -3,6 +3,7 @@ import torch
 from transformers import MLukeTokenizer, LukeModel
 import pickle
 
+# 埋め込みモデルのダウンロード（2回目以降はキャッシュから読み込み？）
 # https://huggingface.co/sonoisa/sentence-luke-japanese-base-lite
 class SentenceLukeJapanese:
     def __init__(self, model_name_or_path, device=None):
@@ -47,12 +48,17 @@ chunk_df = pd.read_pickle('chunk_df.pkl')
 with open('vecdb', 'rb') as f:
     vecdb = pickle.load(f) 
 
+def cosine_similarity(matrix1, matrix2):
+    # 各行列のL2ノルム（ユークリッド距離）を計算
+    norm_matrix1 = np.linalg.norm(matrix1, axis=1, keepdims=True)
+    norm_matrix2 = np.linalg.norm(matrix2, axis=1, keepdims=True)
+    # ベクトルの内積を計算
+    dot_product = np.dot(matrix1, matrix2.T)
+    # コサイン類似度を計算
+    return dot_product / (norm_matrix1 * norm_matrix2.T)
+
 # インスタンス化
 app = FastAPI()
-
-# 埋め込みモデルの読み込み
-with open('models/sentence-luke-japanese-base-lite', 'rb') as f:
-    model = pickle.load(f)
 
 # トップページ
 @app.get('/')

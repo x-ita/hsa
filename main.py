@@ -60,6 +60,13 @@ def cosine_similarity(matrix1, matrix2):
 # インスタンス化
 app = FastAPI()
 
+# 入力するデータ型の定義
+class iris(BaseModel):
+    sepal_length: float
+    sepal_width: float
+    petal_length: float
+    petal_width: float
+
 # トップページ
 @app.get('/')
 def index():

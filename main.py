@@ -39,7 +39,7 @@ class SentenceLukeJapanese:
 
 
 MODEL_NAME = "sonoisa/sentence-luke-japanese-base-lite"
-model = SentenceLukeJapanese(MODEL_NAME)
+#model = SentenceLukeJapanese(MODEL_NAME)
 
 # チャンクデータの読み込み
 chunk_df = pd.read_pickle('chunk_df.pkl')

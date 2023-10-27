@@ -43,11 +43,11 @@ MODEL_NAME = "sonoisa/sentence-luke-japanese-base-lite"
 #model = SentenceLukeJapanese(MODEL_NAME)
 
 # チャンクデータの読み込み
-#chunk_df = pd.read_pickle('chunk_df.pkl')
+chunk_df = pd.read_pickle('chunk_df.pkl')
 
 # Vector DBの読み込み
-#with open('vecdb', 'rb') as f:
-#    vecdb = pickle.load(f) 
+with open('vecdb', 'rb') as f:
+    vecdb = pickle.load(f) 
 
 def cosine_similarity(matrix1, matrix2):
     # 各行列のL2ノルム（ユークリッド距離）を計算
@@ -62,7 +62,7 @@ def cosine_similarity(matrix1, matrix2):
 app = FastAPI()
 
 # 入力するデータ型の定義
-class input_text(BaseModel):
+class query_text(BaseModel):
     text: str
 
 # トップページ
@@ -72,5 +72,5 @@ def index():
 
 # POST が送信された時（入力）と予測値（出力）の定義
 @app.post('/text_similarity')
-def text_similarity(input: input_text):
-    return({'similar_text': input_text.text + '___ok'})
+def text_similarity(query: query_text):
+    return({'similar_text': query.text + '___ok'})

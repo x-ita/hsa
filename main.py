@@ -74,6 +74,7 @@ def text_similarity(query: query_text):
         # コサイン類似度を計算
         return dot_product / (norm_matrix1 * norm_matrix2.T)
     
-    similarity = cosine_similarity(model.encode([query.text]).detach().clone().numpy(), vecdb)[0]
-    sorted_df = chunk_df.assign(similarity=similarity).sort_values('similarity', ascending=False)
-    return sorted_df.head(3).to_jason(orient='records')
+#    similarity = cosine_similarity(model.encode([query.text]).detach().clone().numpy(), vecdb)[0]
+#    sorted_df = chunk_df.assign(similarity=similarity).sort_values('similarity', ascending=False)
+#    return sorted_df.head(3).to_jason(orient='records')
+    return chunk_df.head(3).to_jason(orient='records')

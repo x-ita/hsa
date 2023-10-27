@@ -47,7 +47,7 @@ MODEL_NAME = "sonoisa/sentence-luke-japanese-base-lite"
 chunk_df = pd.read_pickle('chunk_df.pkl')
 
 # Vector DBの読み込み
-with open('vecdb', 'rb') as f:
+with open('vecdb.pkl', 'rb') as f:
     vecdb = pickle.load(f) 
 
 def cosine_similarity(matrix1, matrix2):

@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import torch
 from transformers import MLukeTokenizer, LukeModel
+import pandas
 import pickle
 
 # 埋め込みモデルのダウンロード（2回目以降はキャッシュから読み込み？）

@@ -77,4 +77,4 @@ def text_similarity(query: query_text):
 #    similarity = cosine_similarity(model.encode([query.text]).detach().clone().numpy(), vecdb)[0]
 #    sorted_df = chunk_df.assign(similarity=similarity).sort_values('similarity', ascending=False)
 #    return sorted_df.head(3).to_jason(orient='records')
-    return chunk_df.head(3).to_jason(orient='records')
+    return pd.DataFrame({'a':'query.txt', 'b':query.txt}).to_jason(orient='records')

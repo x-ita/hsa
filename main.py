@@ -62,11 +62,8 @@ def cosine_similarity(matrix1, matrix2):
 app = FastAPI()
 
 # 入力するデータ型の定義
-class iris(BaseModel):
-    sepal_length: float
-    sepal_width: float
-    petal_length: float
-    petal_width: float
+class input_text(BaseModel):
+    text: str
 
 # トップページ
 @app.get('/')
@@ -74,6 +71,6 @@ def index():
     return {"Iris": 'iris_prediction'}
 
 # POST が送信された時（入力）と予測値（出力）の定義
-@app.post('/predict')
-def make_predictions(features: iris):
-    return({'prediction':'0,1,2のどれか'})
+@app.post('/text_similarity')
+def text_similarity(input: input_text):
+    return({'similar_text':'aaaaaaaaaaaaaa'})

@@ -73,4 +73,4 @@ def index():
 # POST が送信された時（入力）と予測値（出力）の定義
 @app.post('/text_similarity')
 def text_similarity(input: input_text):
-    return({'similar_text':'aaaaaaaaaaaaaa'})
+    return({'similar_text': input_text.text + '___ok'})

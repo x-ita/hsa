@@ -1,6 +1,6 @@
 fastapi
 uvicorn
-pytorch
+pytorch=2.0.0
 transformers
 sentencepiece
 pandas

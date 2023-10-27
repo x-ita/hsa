@@ -5,7 +5,7 @@ from transformers import MLukeTokenizer, LukeModel
 import pandas as pd
 import pickle
 
-# 埋め込みモデルのダウンロード（2回目以降はキャッシュから読み込み？）
+# 埋め込みモデルのダウンロード
 # https://huggingface.co/sonoisa/sentence-luke-japanese-base-lite
 class SentenceLukeJapanese:
     def __init__(self, model_name_or_path, device=None):
@@ -41,7 +41,7 @@ class SentenceLukeJapanese:
 
 
 MODEL_NAME = "sonoisa/sentence-luke-japanese-base-lite"
-#model = SentenceLukeJapanese(MODEL_NAME)
+model = SentenceLukeJapanese(MODEL_NAME)
 
 # チャンクデータの読み込み
 chunk_df = pd.read_pickle('chunk_df.pkl')

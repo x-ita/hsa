@@ -74,4 +74,15 @@ def index():
 # POST が送信された時（入力）と予測値（出力）の定義
 @app.post('/text_similarity')
 def text_similarity(query: query_text):
-    return({'similar_text': query.text + '___ok'})
+    def cosine_similarity(matrix1, matrix2):
+        # 各行列のL2ノルム（ユークリッド距離）を計算
+        norm_matrix1 = np.linalg.norm(matrix1, axis=1, keepdims=True)
+        norm_matrix2 = np.linalg.norm(matrix2, axis=1, keepdims=True)
+        # ベクトルの内積を計算
+        dot_product = np.dot(matrix1, matrix2.T)
+        # コサイン類似度を計算
+        return dot_product / (norm_matrix1 * norm_matrix2.T)
+    similarity = cosine_similarity(model.encode([query.text]).detach().clone().numpy(), vecdb)[0]
+    sorted_df = chunk_df.assign(similarity=similarity).sort_values('similarity', ascending=False)
+    
+    return sorted_df.head(3).to_jason(orient='records')

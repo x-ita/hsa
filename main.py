@@ -50,15 +50,6 @@ chunk_df = pd.read_pickle('chunk_df.pkl')
 with open('vecdb.pkl', 'rb') as f:
     vecdb = pickle.load(f) 
 
-def cosine_similarity(matrix1, matrix2):
-    # 各行列のL2ノルム（ユークリッド距離）を計算
-    norm_matrix1 = np.linalg.norm(matrix1, axis=1, keepdims=True)
-    norm_matrix2 = np.linalg.norm(matrix2, axis=1, keepdims=True)
-    # ベクトルの内積を計算
-    dot_product = np.dot(matrix1, matrix2.T)
-    # コサイン類似度を計算
-    return dot_product / (norm_matrix1 * norm_matrix2.T)
-
 # インスタンス化
 app = FastAPI()
 

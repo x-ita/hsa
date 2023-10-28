@@ -54,7 +54,7 @@ with open('vecdb.pkl', 'rb') as f:
 app = FastAPI()
 
 # 入力するデータ型の定義
-class query_text(BaseModel):
+class input_text(BaseModel):
     text: str
 
 # トップページ
@@ -63,8 +63,8 @@ def index():
     return {"Iris": 'iris_prediction'}
 
 # POST が送信された時（入力）と予測値（出力）の定義
-@app.post('/text_similarity')
-def text_similarity(query: query_text):
+@app.post('/search_similar')
+def search_similar(query: input_text):
     def cosine_similarity(matrix1, matrix2):
         # 各行列のL2ノルム（ユークリッド距離）を計算
         norm_matrix1 = np.linalg.norm(matrix1, axis=1, keepdims=True)
@@ -74,7 +74,7 @@ def text_similarity(query: query_text):
         # コサイン類似度を計算
         return dot_product / (norm_matrix1 * norm_matrix2.T)
     
-#    similarity = cosine_similarity(model.encode([query.text]).detach().clone().numpy(), vecdb)[0]
-#    sorted_df = chunk_df.assign(similarity=similarity).sort_values('similarity', ascending=False)
-#    return sorted_df.head(3).to_jason(orient='records')
-    return pd.DataFrame({'a':'query.text', 'b':query.text}).to_jason(orient='records')
+    similarity = cosine_similarity(model.encode([query.text]).detach().clone().numpy(), vecdb)[0]
+    sorted_df = chunk_df.assign(similarity=similarity).sort_values('similarity', ascending=False)
+    return sorted_df.head(3).to_json(orient='records')
+#    return pd.DataFrame({'a':['query.text'], 'b':[query.text]}).to_json(orient='records')

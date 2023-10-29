@@ -1,18 +1,15 @@
+import os
 from fastapi import FastAPI
 from pydantic import BaseModel
-import pandas as pd
-import numpy as np
-import pickle
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.vectorstores import Chroma
 
-# 埋め込みモデルのダウンロード
+# OpenAI API KEY設定
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
-
-# チャンクデータの読み込み
-#chunk_df = pd.read_pickle('chunk_df.pkl')
-
-# Vector DBの読み込み
-#with open('vecdb.pkl', 'rb') as f:
-#    vecdb = pickle.load(f) 
+# Vector DB読み込み
+db_dir = '/content/drive/MyDrive/aozorabunko/chroma_db/'
+vectordb = Chroma(persist_directory=db_dir, embedding_function=OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY))
 
 # インスタンス化
 app = FastAPI()
@@ -29,15 +26,7 @@ def index():
 # POST が送信された時（入力）と予測値（出力）の定義
 @app.post('/search_similar')
 def search_similar(query: input_text):
-    def cosine_similarity(matrix1, matrix2):
-        # 各行列のL2ノルム（ユークリッド距離）を計算
-        norm_matrix1 = np.linalg.norm(matrix1, axis=1, keepdims=True)
-        norm_matrix2 = np.linalg.norm(matrix2, axis=1, keepdims=True)
-        # ベクトルの内積を計算
-        dot_product = np.dot(matrix1, matrix2.T)
-        # コサイン類似度を計算
-        return dot_product / (norm_matrix1 * norm_matrix2.T)
-    
+    search_results = vectordb.similarity_search_with_score(query.text)
 #    similarity = cosine_similarity(model.encode([query.text]).detach().clone().numpy(), vecdb)[0]
 #    sorted_df = chunk_df.assign(similarity=similarity).sort_values('similarity', ascending=False)
 #    return sorted_df.head(3).to_json(orient='records')

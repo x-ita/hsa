@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import pandas as pd
+import numpy as np
 import pickle
 
 # 埋め込みモデルのダウンロード

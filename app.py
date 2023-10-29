@@ -5,7 +5,7 @@ import requests
 st.title('Iris Classifier')
 
 st.text_input('', '')
-st.button('Subnmit')
+st.button('Submit')
 
 # 予測の実行
 #response = requests.post("http://localhost:8000/predict", json=iris)

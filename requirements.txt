@@ -1,5 +1,7 @@
 fastapi
 uvicorn
 streamlit
-pandas
-numpy
+langchain
+chromadb
+openai
+tiktoken

@@ -5,17 +5,17 @@ import requests
 st.title('Iris Classifier')
 
 text_input = st.text_input('テキストを入力')
-st.button('Submit')
 
 text_input_json = {
   'text': text_input
 }
 
-# 類似度計算の実行
-response = requests.post("https://homsa.onrender.com/search_similar", json=text_input_json)
-response_json = response.json()
-response_df = pd.read_json(response_json, orient="records")
-
-# 類似度計算結果上位3件の表示
-st.write('## Similar Files')
-st.dataframe(response_df)
+if st.button('Submit'):
+  # 類似度計算の実行
+  response = requests.post("https://homsa.onrender.com/search_similar", json=text_input_json)
+  response_json = response.json()
+  response_df = pd.read_json(response_json, orient="records")
+  
+  # 類似度計算結果上位3件の表示
+  st.write('### Similar Files')
+  st.dataframe(response_df)

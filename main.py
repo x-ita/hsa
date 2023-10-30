@@ -8,17 +8,12 @@ import numpy as np
 # OpenAI API KEY設定
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
-# Vector DB読み込み
-#db_dir = './chroma_db/'
-#vectordb = Chroma(persist_directory=db_dir, embedding_function=OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY))
-
 # チャンクDataFrame読み込み
 chunk_df = pd.read_pickle('chunk_df.pkl')
 
 # Vector DB作成
 embeddings = OpenAIEmbeddings(model='text-embedding-ada-002', openai_api_key=OPENAI_API_KEY)
 vectordb_array = np.array([embeddings.embed_query(chunk) for chunk in chunk_df['chunk'][:5]]) ##### 最初の５つだけ
-
 
 # インスタンス化
 app = FastAPI()

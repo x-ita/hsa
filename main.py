@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from langchain.embeddings import OpenAIEmbeddings
 import pandas as pd
 import numpy as np
+import pickle
 
 # OpenAI API KEY設定
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
@@ -11,10 +12,10 @@ OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 # チャンクDataFrame読み込み
 chunk_df = pd.read_pickle('chunk_df.pkl')
 
-# Vector DB作成
-embeddings = OpenAIEmbeddings(model='text-embedding-ada-002', openai_api_key=OPENAI_API_KEY)
-vectordb_array = np.array([embeddings.embed_query(chunk) for chunk in chunk_df['chunk'][:5]]) ##### 最初の５つだけ
-
+# Vector DBアレイ読み込み
+with open('vectordb_array.pkl', 'wb') as f:
+  pickle.dump(vectordb_array, f)
+    
 # インスタンス化
 app = FastAPI()
 

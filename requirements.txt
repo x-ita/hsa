@@ -3,5 +3,6 @@ uvicorn
 streamlit
 langchain==0.0.325
 chromadb==0.4.15
+sqlite3==3.35.0
 openai
 tiktoken

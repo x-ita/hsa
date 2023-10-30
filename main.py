@@ -6,7 +6,8 @@ from pydantic import BaseModel
 import json
 
 # OpenAI API KEY設定
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+#OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+TEST_ENV_VAR = os.getenv('TEST_ENV_VAR')
 
 # Vector DB読み込み
 db_dir = './chroma_db/'
@@ -28,7 +29,7 @@ def index():
 @app.post('/search_similar')
 def search_similar(query: input_text):
     a = len(query.text)
-    return '[{"aaa":"' + OPENAI_API_KEY[:3] + '")}]'
+    return '[{"aaa":"' + TEST_ENV_VAR[:11] + '")}]'
 #    search_results = vectordb.similarity_search_with_relevance_scores(query.text, k=3)
 #    search_results_json = json.dumps([
 #        {

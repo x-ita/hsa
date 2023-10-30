@@ -1,8 +1,8 @@
 import os
 from fastapi import FastAPI
 from pydantic import BaseModel
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.vectorstores import Chroma
+#from langchain.embeddings import OpenAIEmbeddings
+#from langchain.vectorstores import Chroma
 import json
 
 # OpenAI API KEY設定

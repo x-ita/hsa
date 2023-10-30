@@ -12,7 +12,7 @@ text_input_json = {
 }
 
 # 類似度計算の実行
-response = requests.post("http://localhost:8000/search_similar", json=text_input_json)
+response = requests.post("https://homsa.onrender.com/search_similar", json=text_input_json)
 response_json = response.json()
 response_df = pd.read_json(response_json, orient="records")
 

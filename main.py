@@ -16,7 +16,7 @@ OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 chunk_df = pd.read_pickle('chunk_df.pkl')
 
 # Vector DB作成
-#embeddings = OpenAIEmbeddings(model='text-embedding-ada-002', openai_api_key=OPENAI_API_KEY)
+embeddings = OpenAIEmbeddings(model='text-embedding-ada-002', openai_api_key=OPENAI_API_KEY)
 vectordb_array = np.array([embeddings.embed_query(chunk) for chunk in chunk_df['chunk'][:5]]) ##### 最初の５つだけ
 
 

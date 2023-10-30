@@ -3,14 +3,25 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
+import pickle
 import json
 
 # OpenAI API KEY設定
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 # Vector DB読み込み
-db_dir = './chroma_db/'
-vectordb = Chroma(persist_directory=db_dir, embedding_function=OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY))
+#db_dir = './chroma_db/'
+#vectordb = Chroma(persist_directory=db_dir, embedding_function=OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY))
+
+# チャンクDocument読み込み
+with open('docs.pkl', 'rb') as f:
+    docs = pickle.load(f)
+
+# Vector DB作成
+vectordb = Chroma.from_documents(
+    documents=docs[:5],
+    embedding=OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY),
+)
 
 # インスタンス化
 app = FastAPI()

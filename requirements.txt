@@ -1,7 +1,6 @@
 fastapi
 uvicorn
 streamlit
-langchain==0.0.325
-chromadb==0.4.15
+langchain
 openai
 tiktoken

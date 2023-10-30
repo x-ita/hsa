@@ -8,7 +8,7 @@ text_input = st.text_input('テキストを入力')
 st.button('Submit')
 
 text_input_json = {
-  'query': text_input
+  'text': text_input
 }
 
 # 類似度計算の実行

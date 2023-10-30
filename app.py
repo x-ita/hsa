@@ -4,7 +4,7 @@ import requests
 
 st.title('Iris Classifier')
 
-text_input = st.text_input('', '')
+text_input = st.text_input('テキストを入力')
 st.button('Submit')
 
 text_input_json = {

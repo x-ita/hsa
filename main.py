@@ -15,7 +15,7 @@ embeddings = OpenAIEmbeddings(model='text-embedding-ada-002', openai_api_key=OPE
 # チャンクDataFrame読み込み
 chunk_df = pd.read_pickle('chunk_df.pkl')
 
-# Vector DBアレイ読み込み
+# 計算済みVector DBアレイ読み込み
 with open('vectordb_array.pkl', 'rb') as f:
   vectordb_array = pickle.load(f)
     
@@ -34,7 +34,7 @@ def index():
 # POST が送信された時（入力）と予測値（出力）の定義
 @app.post('/search_similar')
 def search_similar(query: input_text):
-    # cosine類似度を計算する関数(sklearnでも可)
+    # cosine類似度を計算する関数
     def cosine_similarity(matrix1, matrix2):
         # 各行列のL2ノルム（ユークリッド距離）を計算
         norm_matrix1 = np.linalg.norm(matrix1, axis=1, keepdims=True)

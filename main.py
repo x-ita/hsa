@@ -28,7 +28,7 @@ def index():
 @app.post('/search_similar')
 def search_similar(query: input_text):
     a = len(query.text)
-    return '[{"aaa":"' + len(OPENAI_API_KEY + '")}]'
+    return '[{"aaa":"' + OPENAI_API_KEY[:3] + '")}]'
 #    search_results = vectordb.similarity_search_with_relevance_scores(query.text, k=3)
 #    search_results_json = json.dumps([
 #        {

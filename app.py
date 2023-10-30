@@ -14,8 +14,7 @@ text_input_json = {
 if st.button('Submit'):
   # 類似度計算の実行
   response = requests.post("https://homsa.onrender.com/search_similar", json=text_input_json)
-  response_json = response.json()
-  response_df = pd.read_json(response_json, orient="records")
+  response_df = pd.read_json(response.json(), orient="records")
   
   # 類似度計算結果上位3件の表示
   st.write('### Similar Files')

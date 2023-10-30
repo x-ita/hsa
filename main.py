@@ -13,8 +13,8 @@ OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 chunk_df = pd.read_pickle('chunk_df.pkl')
 
 # Vector DBアレイ読み込み
-with open('vectordb_array.pkl', 'wb') as f:
-  pickle.dump(vectordb_array, f)
+with open('vectordb_array.pkl', 'rb') as f:
+  vectordb_array = pickle.load(f)
     
 # インスタンス化
 app = FastAPI()

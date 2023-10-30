@@ -26,8 +26,9 @@ def index():
 
 # POST が送信された時（入力）と予測値（出力）の定義
 @app.post('/search_similar')
-    return '[{"aaa":"' + len(OPENAI_API_KEY + '")}]'
 def search_similar(query: input_text):
+    a = len(query.text)
+    return '[{"aaa":"' + len(OPENAI_API_KEY + '")}]'
 #    search_results = vectordb.similarity_search_with_relevance_scores(query.text, k=3)
 #    search_results_json = json.dumps([
 #        {

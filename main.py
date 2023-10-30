@@ -5,7 +5,6 @@ from langchain.embeddings import OpenAIEmbeddings
 import pandas as pd
 import numpy as np
 import pickle
-import json
 
 # OpenAI API KEY設定
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')

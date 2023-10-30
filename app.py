@@ -2,7 +2,8 @@ import streamlit as st
 import pandas as pd
 import requests
 
-st.title('Iris Classifier')
+st.title('文章でファイル検索')
+st.write('青空文庫の中谷宇吉郎の作品の中から，「雪の結晶」を含むものを検索対象ファイルにしました．')
 
 text_input = st.text_input('テキストを入力')
 

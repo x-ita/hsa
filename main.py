@@ -2,7 +2,6 @@ import os
 from fastapi import FastAPI
 from pydantic import BaseModel
 from langchain.embeddings import OpenAIEmbeddings
-from langchain.vectorstores import Chroma
 import pandas as pd
 import numpy as np
 import pickle

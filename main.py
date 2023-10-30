@@ -6,10 +6,10 @@ from langchain.vectorstores import Chroma
 import json
 
 # OpenAI API KEY設定
-#OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 # Vector DB読み込み
-db_dir = '/content/drive/MyDrive/aozorabunko/chroma_db/'
+db_dir = './chroma_db/'
 vectordb = Chroma(persist_directory=db_dir, embedding_function=OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY))
 
 # インスタンス化

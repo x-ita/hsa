@@ -58,7 +58,7 @@ def search_similar(query: input_text):
     # 類似度上位3件のみ
     results_df = results_df.sort_values('similarity', ascending=False).head(3)
     # チャンクに基づく質問応答
-  　ans_list = []
+    ans_list = []
     for i in range(3):
       ans = llm_chain.run(context=response_df['chunk'].iloc[i], question=query.text)
       ans_list.append(ans)

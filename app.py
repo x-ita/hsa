@@ -2,12 +2,6 @@ import streamlit as st
 import pandas as pd
 import requests
 
-prompt = PromptTemplate(
-  template="""与えられたテキストの内容に基づいて質問に回答してください．### テキスト\n{context}\n### 質問:{question}""",
-  input_variables=["context", "question"]
-)
-llm_chain = LLMChain(prompt=prompt, llm=OpenAI()) 
-
 st.title('文章でファイル検索')
 st.write('青空文庫の昔話・童話の中から，以下の18作品を検索対象ファイルにしました．  \n' + \
          'かちかち山，一寸法師，花咲かじじい，浦島太郎，舌切りすずめ，猿かに合戦，' + \

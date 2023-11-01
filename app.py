@@ -1,9 +1,6 @@
 import streamlit as st
 import pandas as pd
 import requests
-from langchain.llms import OpenAI
-from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain
 
 prompt = PromptTemplate(
   template="""与えられたテキストの内容に基づいて質問に回答してください．### テキスト\n{context}\n### 質問:{question}""",

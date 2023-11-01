@@ -21,7 +21,7 @@ with open('vectordb_array.pkl', 'rb') as f:
 
 # LLMChainインスタンス作成
 prompt = PromptTemplate(
-  template="""与えられたテキストの内容に基づいて質問に回答してください．### テキスト\n{context}\n### 質問\n{question}\n### 回答\n""",
+  template="""与えられたテキストの内容に基づいて質問に回答してください．ただし情報が不十分な場合はわからないと答えてください．\n### テキスト\n{context}\n### 質問\n{question}\n### 回答\n""",
   input_variables=["context", "question"]
 )
 llm_chain = LLMChain(prompt=prompt, llm=OpenAI()) 

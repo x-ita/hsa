@@ -21,7 +21,7 @@ if st.button('Submit'):
   response_df = pd.read_json(response.json(), orient="records")
   # チャンクに基づく質問応答の表示
   for i in range(3):
-    st.write('\n\n回答' + str(i+1) + '：\n' + response_df['answer'].iloc[i] + '\n')
-    st.write('ファイル（作品）：\n' + response_df['title_author'].iloc[i] + '\n')
-    st.write('テキスト：\n' + response_df['chunk'].iloc[i])
+    st.write('\n\n回答' + str(i+1) + '：\n' + response_df['answer'].iloc[i])
+    st.write('\n\nファイル（作品）：\n' + response_df['title_author'].iloc[i])
+    st.write('\n\nテキスト：\n' + response_df['chunk'].iloc[i])
   

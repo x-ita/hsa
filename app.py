@@ -9,7 +9,7 @@ st.write('青空文庫の昔話・童話の中から，以下の18作品を検�
          '星の銀貨，赤ずきんちゃん，おおかみと七ひきのこどもやぎ，ヘンゼルとグレーテル（以上グリム兄弟 楠山正雄訳），' + \
          '桃太郎（芥川龍之介），お伽草紙（太宰治）')
 
-text_input = st.text_input('テキストを入力')
+text_input = st.text_input('質問を入力してください．')
 
 text_input_json = {
   'text': text_input

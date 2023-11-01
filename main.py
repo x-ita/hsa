@@ -2,6 +2,9 @@ import os
 from fastapi import FastAPI
 from pydantic import BaseModel
 from langchain.embeddings import OpenAIEmbeddings
+from langchain.llms import OpenAI
+from langchain.prompts import PromptTemplate
+from langchain.chains import LLMChain
 import pandas as pd
 import numpy as np
 import pickle
@@ -15,7 +18,14 @@ chunk_df = pd.read_pickle('chunk_df.pkl')
 # 計算済みVector DBアレイ読み込み
 with open('vectordb_array.pkl', 'rb') as f:
   vectordb_array = pickle.load(f)
-    
+
+# LLMChainインスタンス作成
+prompt = PromptTemplate(
+  template="""与えられたテキストの内容に基づいて質問に回答してください．### テキスト\n{context}\n### 質問:{question}""",
+  input_variables=["context", "question"]
+)
+llm_chain = LLMChain(prompt=prompt, llm=OpenAI()) 
+
 # インスタンス化
 app = FastAPI()
 
@@ -44,7 +54,16 @@ def search_similar(query: input_text):
     query_embed_list = embeddings.embed_query(query.text)
     query_array = np.array(query_embed_list).reshape(1, 1536)
     similarity = cosine_similarity(query_array, vectordb_array)[0]
-    sorted_df = chunk_df.assign(similarity=similarity).sort_values('similarity', ascending=False)
-    search_results_json = sorted_df.head(3).to_json()
+    results_df = chunk_df.assign(similarity=similarity)
+    # 類似度上位3件のみ
+    results_df = results_df.sort_values('similarity', ascending=False).head(3)
+    # チャンクに基づく質問応答
+  　ans_list = []
+    for i in range(3):
+      ans = llm_chain.run(context=response_df['chunk'].iloc[i], question=query.text)
+      ans_list.append(ans)
+    # 結果をJSONにして返す
+    results_df = results_df.assign(answer=ans_list)    
+    search_results_json = results_df.to_json()
     
     return search_results_json

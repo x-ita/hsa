@@ -19,14 +19,7 @@ chunk_df = pd.read_pickle('chunk_df.pkl')
 with open('vectordb_array.pkl', 'rb') as f:
   vectordb_array = pickle.load(f)
 
-# LLMChainインスタンス作成
-prompt = PromptTemplate(
-  template="""与えられたテキストの内容に基づいて質問に回答してください．### テキスト\n{context}\n### 質問:{question}""",
-  input_variables=["context", "question"]
-)
-llm_chain = LLMChain(prompt=prompt, llm=OpenAI()) 
-
-# インスタンス化
+# FastAPIインスタンス化
 app = FastAPI()
 
 # 入力するデータ型の定義

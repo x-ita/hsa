@@ -6,11 +6,8 @@ import pandas as pd
 import numpy as np
 import pickle
 
-# OpenAI API KEY設定
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
-
 # OpenAIEmbeddingsインスタンス作成
-embeddings = OpenAIEmbeddings(model='text-embedding-ada-002', openai_api_key=OPENAI_API_KEY)
+embeddings = OpenAIEmbeddings(model='text-embedding-ada-002')
 
 # チャンクDataFrame読み込み
 chunk_df = pd.read_pickle('chunk_df.pkl')

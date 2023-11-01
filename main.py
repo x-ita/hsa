@@ -60,7 +60,7 @@ def search_similar(query: input_text):
     # チャンクに基づく質問応答
     ans_list = []
     for i in range(3):
-      ans = llm_chain.run(context=response_df['chunk'].iloc[i], question=query.text)
+      ans = llm_chain.run(context=results_df['chunk'].iloc[i], question=query.text)
       ans_list.append(ans)
     # 結果をJSONにして返す
     results_df = results_df.assign(answer=ans_list)    

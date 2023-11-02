@@ -1,6 +1,9 @@
+import os
 import streamlit as st
 import pandas as pd
 import requests
+
+fastapi_url = os.environ['FASTAPI_URL']
 
 st.title('文章でファイル検索')
 st.write('青空文庫の昔話・童話の中から，以下の18作品を検索対象ファイルにしました．  \n' + \
@@ -17,7 +20,7 @@ text_input_json = {
 
 if st.button('Submit'):
   # 類似度計算を実行し上位3件を取得(FastAPI)
-  response = requests.post("https://homsa.onrender.com/search_qa", json=text_input_json)
+  response = requests.post(fastapi_url , json=text_input_json)
   response_df = pd.read_json(response.json(), orient="records")
   # チャンクに基づく質問応答の表示
   for i in range(3):

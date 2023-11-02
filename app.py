@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import requests
 
-fastapi_url = os.environ['FASTAPI_URL']
+fastapi_url = st.secrets['FASTAPI_URL']
 
 st.title('文章でファイル検索')
 st.write('青空文庫の昔話・童話の中から，以下の18作品を検索対象ファイルにしました．  \n' + \

@@ -17,7 +17,7 @@ text_input_json = {
 
 if st.button('Submit'):
   # 類似度計算を実行し上位3件を取得(FastAPI)
-  response = requests.post("https://homsa73785.onrender.com/search_qa", json=text_input_json)
+  response = requests.post("https://homsa.onrender.com/search_qa", json=text_input_json)
   response_df = pd.read_json(response.json(), orient="records")
   # チャンクに基づく質問応答の表示
   for i in range(3):

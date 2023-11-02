@@ -5,6 +5,7 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.llms import OpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
+from langchain.utils.math import cosine_similarity
 import pandas as pd
 import numpy as np
 import pickle
@@ -41,18 +42,8 @@ def index():
     return {"Iris": 'iris_prediction'}
 
 # POST が送信された時（入力）と予測値（出力）の定義
-@app.post('/search_similar')
-def search_similar(query: input_text):
-    # cosine類似度を計算する関数
-    def cosine_similarity(matrix1, matrix2):
-        # 各行列のL2ノルム（ユークリッド距離）を計算
-        norm_matrix1 = np.linalg.norm(matrix1, axis=1, keepdims=True)
-        norm_matrix2 = np.linalg.norm(matrix2, axis=1, keepdims=True)
-        # ベクトルの内積を計算
-        dot_product = np.dot(matrix1, matrix2.T)
-        # コサイン類似度を計算
-        return dot_product / (norm_matrix1 * norm_matrix2.T)
-
+@app.post('/search_qa')
+def search_qa(query: input_text):
     query_embed_list = embeddings.embed_query(query.text)
     query_array = np.array(query_embed_list).reshape(1, 1536)
     similarity = cosine_similarity(query_array, vectordb_array)[0]
@@ -66,6 +57,6 @@ def search_similar(query: input_text):
       ans_list.append(ans)
     # 結果をJSONにして返す
     results_df = results_df.assign(answer=ans_list)    
-    search_results_json = results_df.to_json()
+    results_json = results_df.to_json()
     
-    return search_results_json
+    return results_json

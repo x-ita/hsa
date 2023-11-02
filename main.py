@@ -22,8 +22,8 @@ with open('vectordb_array.pkl', 'rb') as f:
 
 # LLMChainインスタンス作成
 prompt = PromptTemplate(
-  template = '下記のテキストの内容に基づいて質問に正確に回答してください．' + \
-             'ただし情報が不十分な場合はわからないと回答すること．\n' + \
+  template = '下記のテキストの内容に基づいて質問に回答してください．\n' + \
+#             'ただし情報が不十分な場合はわからないと回答すること．\n' + \
              '### テキスト\n{context}\n### 質問\n{question}\n### 回答\n',
   input_variables=["context", "question"]
 )

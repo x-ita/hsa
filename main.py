@@ -22,8 +22,8 @@ with open('vectordb_array.pkl', 'rb') as f:
 
 # LLMChainインスタンス作成
 prompt = PromptTemplate(
-  template = '与えられたテキストの内容に基づいて質問に回答してください．' + \
-             'ただし情報が不十分な場合はわからないと答えてください．\n' + \
+  template = '下記のテキストの内容に基づいて質問に正確に回答してください．' + \
+             'ただし情報が不十分な場合はわからないと回答すること．\n' + \
              '### テキスト\n{context}\n### 質問\n{question}\n### 回答\n',
   input_variables=["context", "question"]
 )
@@ -41,7 +41,7 @@ class input_text(BaseModel):
 def index():
     return {"ファイル検索": '質問に対してファイルを検索しその内容に基づいて回答する'}
 
-# POST が送信された時（入力）と予測値（出力）の定義
+# POST が送信された時
 @app.post('/search_qa')
 def search_qa(query: input_text):
     # 入力文章をベクトル化

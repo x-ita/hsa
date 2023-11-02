@@ -39,18 +39,20 @@ class input_text(BaseModel):
 # トップページ
 @app.get('/')
 def index():
-    return {"Iris": 'iris_prediction'}
+    return {"ファイル検索": '質問に対してファイルを検索しその内容に基づいて回答する'}
 
 # POST が送信された時（入力）と予測値（出力）の定義
 @app.post('/search_qa')
 def search_qa(query: input_text):
+    # 入力文章をベクトル化
     query_embed_list = embeddings.embed_query(query.text)
     query_array = np.array(query_embed_list).reshape(1, 1536)
+    # Vector DBに対して類似度を計算
     similarity = cosine_similarity(query_array, vectordb_array)[0]
     results_df = chunk_df.assign(similarity=similarity)
     # 類似度上位3件のみ
     results_df = results_df.sort_values('similarity', ascending=False).head(3)
-    # チャンクに基づく質問応答
+    # 上位3件それぞれについてチャンクに基づく質問応答
     ans_list = []
     for i in range(3):
       ans = llm_chain.run(context=results_df['chunk'].iloc[i], question=query.text)

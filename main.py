@@ -2,8 +2,8 @@ import os
 from fastapi import FastAPI
 from pydantic import BaseModel
 from langchain.embeddings import OpenAIEmbeddings
-from langchain.llms import OpenAI
-from langchain.prompts import PromptTemplate
+from langchain.chat_models import ChatOpenAI
+from langchain.prompts import ChatPromptTemplate
 from langchain.chains import LLMChain
 from langchain.utils.math import cosine_similarity
 import pandas as pd
@@ -21,13 +21,17 @@ with open('vectordb_array.pkl', 'rb') as f:
   vectordb_array = pickle.load(f)
 
 # LLMChainインスタンス作成
-prompt = PromptTemplate(
-  template = '下記のテキストの内容に基づいて質問に回答してください．\n' + \
-#             'ただし情報が不十分な場合はわからないと回答すること．\n' + \
-             '### テキスト\n{context}\n### 質問\n{question}\n### 回答\n',
-  input_variables=["context", "question"]
+chat_model = ChatOpenAI() # gpt3.5-turbo??
+prompt_template = ChatPromptTemplate.from_messages([
+    ("system", "あなたは優秀なAIアシスタントです．"),
+    ("human", "与えられたテキストの内容に基づいて質問に回答してください．\n" + \
+#              "ただし情報が不十分な場合はわからないと回答すること．\n" + \
+              "### テキスト\n{context}\n### 質問:{question}"),
+])
+llm_chain = LLMChain(
+    llm=chat_model, 
+    prompt=prompt_template
 )
-llm_chain = LLMChain(prompt=prompt, llm=OpenAI()) 
 
 # FastAPIインスタンス化
 app = FastAPI()

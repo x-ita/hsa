@@ -15,7 +15,7 @@ embeddings = OpenAIEmbeddings(model='text-embedding-ada-002')
 # チャンクDataFrame読み込み
 chunk_df = pd.read_pickle('chunk_df.pkl')
 
-# 計算済みVector DBアレイ読み込み
+# 検索対象の埋め込みベクトル（計算済み；np.ndarray）読み込み
 with open('vectordb_array.pkl', 'rb') as f:
   vectordb_array = pickle.load(f)
 

@@ -23,8 +23,8 @@ with open('embeddings_array.pkl', 'rb') as f:
 chat_model = ChatOpenAI(model_name='gpt-3.5-turbo') # temperatureは?
 prompt_template = ChatPromptTemplate.from_messages([
     ("system", "あなたは優秀なAIアシスタントです．"),
-    ("human", "与えられたテキストの内容に基づいて質問に回答してください．\n" + \
-#              "ただし情報が不十分な場合はわからないと回答すること．\n" + \
+    ("human", "下記テキストに基づいて質問に回答してください．" + \
+              "必要な情報がテキストに書かれていない場合はわからないと答えてください．\n" + \
               "### テキスト\n{context}\n### 質問:{question}"),
 ])
 llm_chain = LLMChain(

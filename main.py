@@ -15,12 +15,12 @@ embeddings = OpenAIEmbeddings(model='text-embedding-ada-002')
 # チャンクDataFrame読み込み
 chunk_df = pd.read_pickle('chunk_df.pkl')
 
-# 検索対象の埋め込みベクトル（計算済み；np.ndarray）読み込み
-with open('vectordb_array.pkl', 'rb') as f:
-  vectordb_array = pickle.load(f)
+# 検索対象の埋め込みベクトル（計算済み；np.ndarray）読み込み # Chromaの方がよい？
+with open('embeddings_array.pkl', 'rb') as f:
+  embeddings_array = pickle.load(f)
 
 # LLMChainインスタンス作成
-chat_model = ChatOpenAI() # gpt3.5-turbo??
+chat_model = ChatOpenAI(model_name='gpt-3.5-turbo') # temperatureは?
 prompt_template = ChatPromptTemplate.from_messages([
     ("system", "あなたは優秀なAIアシスタントです．"),
     ("human", "与えられたテキストの内容に基づいて質問に回答してください．\n" + \
@@ -51,7 +51,7 @@ def search_qa(query: input_text):
     query_embed_list = embeddings.embed_query(query.text)
     query_array = np.array(query_embed_list).reshape(1, 1536)
     # Vector DBに対して類似度を計算
-    similarity = cosine_similarity(query_array, vectordb_array)[0]
+    similarity = cosine_similarity(query_array, embeddings_array)[0]
     results_df = chunk_df.assign(similarity=similarity)
     # 類似度上位3件のみ
     results_df = results_df.sort_values('similarity', ascending=False).head(3)

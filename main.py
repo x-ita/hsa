@@ -48,14 +48,14 @@ def index():
 # POST が送信された時
 @app.post('/search_qa')
 def search_qa(query: input_question_kw):
-    question = input_question_kw.question
-    kw = input_question_kw.kw
+    question = query.question
+    kw = query.kw
     # キーワードを含むチャンクを選択
     tf = chunk_df['chunk'].str.contains(kw).to_numpy()    
     chunk_df_filtered = chunk_df[tf]
     embeddings_array_filtered = embeddings_array[tf, :]
     # 質問文をベクトル化
-    query_embed_list = embeddings.embed_query(query.question)
+    query_embed_list = embeddings.embed_query(question)
     query_array = np.array(query_embed_list).reshape(1, 1536)
     # Vector DBに対して類似度を計算
     similarity = cosine_similarity(query_array, embeddings_array_filtered)[0]
@@ -65,7 +65,7 @@ def search_qa(query: input_question_kw):
     # 上位3件それぞれについてチャンクに基づく質問応答
     ans_list = []
     for i in range(3):
-      ans = llm_chain.run(context=results_df['chunk'].iloc[i], question=query.text)
+      ans = llm_chain.run(context=results_df['chunk'].iloc[i], question=question)
       ans_list.append(ans)
     # 結果をJSONにして返す
     results_df = results_df.assign(answer=ans_list)    

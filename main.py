@@ -51,9 +51,12 @@ def search_qa(query: input_question_kw):
     question = query.question
     kw = query.kw
     # キーワードを含むチャンクを選択
-    tf = chunk_df['chunk'].str.contains(kw).to_numpy()    
-    chunk_df_filtered = chunk_df[tf]
-    embeddings_array_filtered = embeddings_array[tf, :]
+    if kw != '':
+      tf = chunk_df['chunk'].str.contains(kw).to_numpy()    
+      chunk_df_filtered = chunk_df[tf]
+      embeddings_array_filtered = embeddings_array[tf, :]
+    else:
+      embeddings_array_filtered = embeddings_array
     # 質問文をベクトル化
     query_embed_list = embeddings.embed_query(question)
     query_array = np.array(query_embed_list).reshape(1, 1536)

@@ -36,8 +36,9 @@ llm_chain = LLMChain(
 app = FastAPI()
 
 # 入力するデータ型の定義
-class input_text(BaseModel):
-    text: str
+class input_question_kw(BaseModel):
+    question: str
+    kw: str
 
 # トップページ
 @app.get('/')
@@ -46,13 +47,19 @@ def index():
 
 # POST が送信された時
 @app.post('/search_qa')
-def search_qa(query: input_text):
-    # 入力文章をベクトル化
-    query_embed_list = embeddings.embed_query(query.text)
+def search_qa(query: input_question_kw):
+    question = input_question_kw.question
+    kw = input_question_kw.kw
+    # キーワードを含むチャンクを選択
+    tf = chunk_df['chunk'].str.contains(kw).to_numpy()    
+    chunk_df_filtered = chunk_df[tf]
+    embeddings_array_filtered = embeddings_array[tf, :]
+    # 質問文をベクトル化
+    query_embed_list = embeddings.embed_query(query.question)
     query_array = np.array(query_embed_list).reshape(1, 1536)
     # Vector DBに対して類似度を計算
-    similarity = cosine_similarity(query_array, embeddings_array)[0]
-    results_df = chunk_df.assign(similarity=similarity)
+    similarity = cosine_similarity(query_array, embeddings_array_filtered)[0]
+    results_df = chunk_df_filtered.assign(similarity=similarity)
     # 類似度上位3件のみ
     results_df = results_df.sort_values('similarity', ascending=False).head(3)
     # 上位3件それぞれについてチャンクに基づく質問応答

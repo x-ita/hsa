@@ -13,13 +13,13 @@ st.write('青空文庫の昔話・童話の中から，以下の18作品を検�
 
 text_input = st.text_input('上記の昔話・童話の内容についての質問を入力してください．ただし，テキストを250文字ずつのチャンクに分割してあるため，複数のチャンクにまたがる内容については適切な回答が得られないことがあります．')
 
-text_input_json = {
+text_input_dict = {
   'text': text_input
 }
 
 if st.button('Submit'):
   # 類似度計算を実行し上位3件を取得(FastAPI)
-  response = requests.post(fastapi_url, json=text_input_json)
+  response = requests.post(fastapi_url, json=text_input_dict) # 引数jsonでなぜかdict型を渡す
   response_df = pd.read_json(response.json(), orient="records")
   # チャンクに基づく質問応答の表示
   for i in range(3):

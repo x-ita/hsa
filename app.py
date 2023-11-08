@@ -12,7 +12,7 @@ st.write('青空文庫の昔話・童話の中から，以下の18作品を検�
          '桃太郎（芥川龍之介），お伽草紙（太宰治）')
 
 input_question = st.text_input('上記の昔話・童話の内容についての質問を入力してください．')
-input_kw = st.text_input('キーワードを入力してください．')
+input_kw = '' # st.text_input('キーワードを入力してください．')
 
 input_dict = {
   'question': input_question,

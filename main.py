@@ -61,12 +61,12 @@ def search_qa(query: input_question_kw):
     # 質問文をベクトル化
     query_embed_list = embeddings.embed_query(question)
     query_array = np.array(query_embed_list).reshape(1, 1536)
-    # 検索対象テキストに対してベクトル類似度を計算
+    # 検索対象チャンクに対してベクトル類似度を計算
     similarity = cosine_similarity(query_array, embeddings_array_filtered)[0]
     results_df = chunk_df_filtered.assign(similarity=similarity)
     # 類似度上位3件のみ
     results_df = results_df.sort_values('similarity', ascending=False).head(3)
-    # 上位3件それぞれについてチャンクに基づく質問応答
+    # 上位3件それぞれについて質問応答
     ans_list = []
     for i in range(3):
       ans = llm_chain.run(context=results_df['chunk'].iloc[i], question=question)

@@ -15,7 +15,7 @@ embeddings = OpenAIEmbeddings(model='text-embedding-ada-002')
 # チャンクDataFrame読み込み
 chunk_df = pd.read_pickle('chunk_df.pkl')
 
-# 検索対象の埋め込みベクトル（計算済み；np.ndarray）読み込み # Chromaの方がよい？
+# 検索対象の埋め込みベクトル（np.ndarray）読み込み
 with open('embeddings_array.pkl', 'rb') as f:
   embeddings_array = pickle.load(f)
 
@@ -23,8 +23,8 @@ with open('embeddings_array.pkl', 'rb') as f:
 chat_model = ChatOpenAI(model_name='gpt-3.5-turbo') # temperatureは?
 prompt_template = ChatPromptTemplate.from_messages([
     ("system", "あなたは優秀なAIアシスタントです．"),
-    ("human", "下記テキストに基づいて質問に回答してください．\n" + \
-#              "必要な情報がテキストに書かれていない場合はわからないと答えてください．\n" + \
+    ("human", "下記テキストに基づいて質問に回答してください．" + \
+              "必要な情報がテキストに書かれていない場合はわからないと答えること．\n" + \
               "### テキスト\n{context}\n### 質問\n{question}"),
 ])
 llm_chain = LLMChain(

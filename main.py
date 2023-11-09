@@ -61,7 +61,7 @@ def search_qa(query: input_question_kw):
     # 質問文をベクトル化
     query_embed_list = embeddings.embed_query(question)
     query_array = np.array(query_embed_list).reshape(1, 1536)
-    # Vector DBに対して類似度を計算
+    # 検索対象テキストに対してベクトル類似度を計算
     similarity = cosine_similarity(query_array, embeddings_array_filtered)[0]
     results_df = chunk_df_filtered.assign(similarity=similarity)
     # 類似度上位3件のみ

@@ -17,7 +17,7 @@ chunk_df = pd.read_pickle('summary_chunk_df.pkl')
 
 # 検索対象の埋め込みベクトル（np.ndarray）読み込み
 with open('summary_chunk_embeddings_array.pkl', 'rb') as f:
-  embeddings_array = pickle.load(f)
+    embeddings_array = pickle.load(f)
 
 # LLMChainインスタンス作成
 chat_model = ChatOpenAI(model_name='gpt-3.5-turbo') # temperatureは?
@@ -52,7 +52,7 @@ def search_qa(query: input_question_kw):
     kw = query.kw
     # キーワードを含むチャンクを選択
     if kw != '':
-        tf = chunk_df['chunk'].str.contains(kw).to_numpy()    
+        tf = chunk_df['text'].str.contains(kw).to_numpy()    
         chunk_df_filtered = chunk_df[tf]
         embeddings_array_filtered = embeddings_array[tf, :]
     else:
@@ -69,7 +69,7 @@ def search_qa(query: input_question_kw):
     # 上位3件それぞれについて質問応答
     ans_list = []
     for i in range(3):
-      ans = llm_chain.run(context=results_df['chunk'].iloc[i], question=question)
+      ans = llm_chain.run(context=results_df['text'].iloc[i], question=question)
       ans_list.append(ans)
     # 結果をJSONにして返す
     results_df = results_df.assign(answer=ans_list)    

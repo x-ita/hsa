@@ -19,13 +19,13 @@ st.markdown(
     '[シンデレラ](https://www.aozora.gr.jp/cards/001239/files/46348_23182.html)'
     )
 
-input_question = st.text_input('上記の昔話・童話の内容についての質問を入力してください．')
-input_kw = st.text_input('キーワードを入力してください（任意）．')
+input_question = st.text_input('上記の昔話・童話の内容についての質問を入力してください．本文の要約または本文を1000文字以内に分割したテキストの中から意味の似ているものを検索し，上位3件について質問に対する回答を生成します．')
+input_kw = st.text_input('キーワードを入力してください（任意）．キーワードを含むテキストのみ検索対象になります．')
 
 input_dict = {
     'question': input_question,
     'kw': input_kw
-　　}
+    }
 
 if st.button('Submit'):
   # 類似度計算を実行し上位3件を取得(FastAPI)

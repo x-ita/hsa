@@ -25,7 +25,7 @@ if st.button('Submit'):
   response = requests.post(fastapi_url, json=input_dict) # 引数jsonでなぜかdict型を渡す
   response_df = pd.read_json(response.json(), orient="records")
   # チャンクに基づく質問応答の表示
-  for row in response_df.itertuples():
+  for i, row in enumerate(response_df.itertuples()):
     st.write('\n\n回答 ' + str(i+1) + '：\n' + row.answer)
     st.write('\n\nファイル（作品）：\n' + row.title_author)
     st.write('\n\n類似度：\n' + row.similarity)

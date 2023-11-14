@@ -26,8 +26,8 @@ if st.button('Submit'):
   response_df = pd.read_json(response.json(), orient="records")
   # チャンクに基づく質問応答の表示
   for row in response_df.itertuples():
-    st.write('\n\n回答' + str(i+1) + '：\n' + row.answer)
-    st.write('\n\nファイル（作品）' + str(i+1) + '：\n' + row.title_author)
-    st.write('\n\n類似度' + str(i+1) + '：\n' + row.similarity)
-    st.write('\n\nテキスト' + str(i+1) + '：\n' + row.text)
+    st.write('\n\n回答 ' + str(i+1) + '：\n' + row.answer)
+    st.write('\n\nファイル（作品）：\n' + row.title_author)
+    st.write('\n\n類似度：\n' + row.similarity)
+    st.write('\n\nテキスト：\n' + row.text)
   

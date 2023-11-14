@@ -5,7 +5,7 @@ import requests
 fastapi_url = st.secrets['FASTAPI_URL']
 
 st.title('文章でファイル検索')
-st.write('青空文庫の昔話・童話の中から，以下の18作品を検索対象ファイルにしました．  \n' + \
+st.write('青空文庫の昔話・童話の中から，以下の10作品を検索対象ファイルにしました．  \n' + \
          '一寸法師，花咲かじじい，浦島太郎，猿かに合戦，桃太郎，瘤とり，金太郎（以上楠山正雄），' + \
          '赤ずきんちゃん（グリム兄弟 楠山正雄訳），' + \
          'マッチ売りの少女（ハンス・クリスチャン・アンデルセン 矢崎源九郎訳），' + \
@@ -13,7 +13,7 @@ st.write('青空文庫の昔話・童話の中から，以下の18作品を検�
          )
 
 input_question = st.text_input('上記の昔話・童話の内容についての質問を入力してください．')
-input_kw = st.text_input('キーワードを入力してください．')
+input_kw = st.text_input('キーワードを入力してください（任意）．')
 
 input_dict = {
   'question': input_question,

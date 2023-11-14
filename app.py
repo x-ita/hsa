@@ -28,6 +28,6 @@ if st.button('Submit'):
   for i, row in enumerate(response_df.itertuples()):
     st.write('\n\n回答 ' + str(i+1) + '：\n' + row.answer)
     st.write('\n\nファイル（作品）：\n' + row.title_author)
-    st.write('\n\n類似度：\n' + str(round(row.similarity, 1)))
+    st.write('\n\n類似度：\n' + str(round(row.similarity, 3)))
     st.write('\n\nテキスト：\n' + row.text)
   

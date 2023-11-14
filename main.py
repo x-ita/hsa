@@ -13,10 +13,10 @@ import pickle
 embeddings = OpenAIEmbeddings(model='text-embedding-ada-002')
 
 # チャンクDataFrame読み込み
-chunk_df = pd.read_pickle('chunk_df.pkl')
+chunk_df = pd.read_pickle('summary_chunk_df.pkl')
 
 # 検索対象の埋め込みベクトル（np.ndarray）読み込み
-with open('embeddings_array.pkl', 'rb') as f:
+with open('summary_chunk_embeddings_array.pkl', 'rb') as f:
   embeddings_array = pickle.load(f)
 
 # LLMChainインスタンス作成

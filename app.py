@@ -28,5 +28,5 @@ if st.button('Submit'):
   for i in range(3):
     st.write('\n\n回答' + str(i+1) + '：\n' + response_df['answer'].iloc[i])
     st.write('\n\nファイル（作品）' + str(i+1) + '：\n' + response_df['title_author'].iloc[i])
-    st.write('\n\nテキスト' + str(i+1) + '：\n' + response_df['chunk'].iloc[i])
+    st.write('\n\nテキスト' + str(i+1) + '：\n' + response_df['text'].iloc[i])
   

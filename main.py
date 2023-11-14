@@ -68,8 +68,8 @@ def search_qa(query: input_question_kw):
     results_df = results_df.sort_values('similarity', ascending=False).head(3)
     # 上位3件それぞれについて質問応答
     ans_list = []
-    for i in range(3):
-      ans = llm_chain.run(context=results_df['text'].iloc[i], question=question)
+    for context in results_df['text']:
+      ans = llm_chain.run(context=context, question=question)
       ans_list.append(ans)
     # 結果をJSONにして返す
     results_df = results_df.assign(answer=ans_list)    

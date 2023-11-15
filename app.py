@@ -4,27 +4,27 @@ import requests
 
 fastapi_url = st.secrets['FASTAPI_URL']
 
-st.title('文章でファイル検索')
 st.markdown(
+    '### ファイル検索チャットボット  \n'
     '青空文庫の昔話・童話の中から，以下の10作品を検索対象ファイルにしました．  \n'
     '[一寸法師](https://www.aozora.gr.jp/cards/000329/files/43457_23938.html)，'
-    '[花咲かじじい](https://www.aozora.gr.jp/cards/000329/files/3391.html)，'
     '[浦島太郎](https://www.aozora.gr.jp/cards/000329/files/3390_33153.html)，'
-    '[猿かに合戦](https://www.aozora.gr.jp/cards/000329/files/18334_11947.html)，'
-    '[桃太郎](https://www.aozora.gr.jp/cards/000329/files/18376_12100.html)，'
-    '[瘤とり](https://www.aozora.gr.jp/cards/000329/files/43461_23937.html)，'
     '[金太郎](https://www.aozora.gr.jp/cards/000329/files/18337_11942.html)，'
+    '[瘤とり](https://www.aozora.gr.jp/cards/000329/files/43461_23937.html)，'
+    '[猿かに合戦](https://www.aozora.gr.jp/cards/000329/files/18334_11947.html)，'
+    '[花咲かじじい](https://www.aozora.gr.jp/cards/000329/files/3391.html)，'
+    '[桃太郎](https://www.aozora.gr.jp/cards/000329/files/18376_12100.html)，'
     '[赤ずきんちゃん](https://www.aozora.gr.jp/cards/001091/files/42311_15546.html)，'
-    '[マッチ売りの少女](https://www.aozora.gr.jp/cards/000019/files/194_23024.html)，'
-    '[シンデレラ](https://www.aozora.gr.jp/cards/001239/files/46348_23182.html)'
+    '[シンデレラ](https://www.aozora.gr.jp/cards/001239/files/46348_23182.html)，'
+    '[マッチ売りの少女](https://www.aozora.gr.jp/cards/000019/files/194_23024.html)'
     )
 
-input_question = st.text_input('上記の昔話・童話の内容についての質問を入力してください．本文の要約または本文を1000文字以内に分割したテキストの中から意味の似ているものを検索し，類似度上位3件について質問に対する回答を生成します．')
-input_kw = st.text_input('キーワードを入力してください（任意）．キーワードを含むテキストのみ検索対象になります．')
+question = st.text_input('上記の昔話・童話の内容についての質問を入力してください．本文の要約または本文を1000文字以内に分割したテキストをベクトル検索し，類似度上位3件について質問に対する回答を生成します．')
+kw = st.text_input('キーワードを入力してください（任意）．キーワードを含むテキストのみ検索対象になります．')
 
 input_dict = {
-    'question': input_question,
-    'kw': input_kw
+    'question': question,
+    'kw': kw
     }
 
 if st.button('Submit'):

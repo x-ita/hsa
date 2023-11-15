@@ -17,10 +17,10 @@ chunk_df = pd.read_pickle('summary_chunk_df.pkl')
 
 # 検索対象の埋め込みベクトル（np.ndarray）読み込み
 with open('summary_chunk_embeddings_array.pkl', 'rb') as f:
-    embeddings_array = pickle.load(f)
+    embed_array = pickle.load(f)
 
 # LLMChainインスタンス作成
-chat_model = ChatOpenAI(model_name='gpt-3.5-turbo') # temperatureは?
+llm = ChatOpenAI(model_name='gpt-3.5-turbo', temperature=0)
 prompt_template = ChatPromptTemplate.from_messages([
     ("system", "あなたは優秀なAIアシスタントです．"),
     ("human", "下記テキストに基づいて質問に回答してください．" + \
@@ -28,7 +28,7 @@ prompt_template = ChatPromptTemplate.from_messages([
               "### テキスト\n{context}\n### 質問\n{question}"),
 ])
 llm_chain = LLMChain(
-    llm=chat_model, 
+    llm=llm, 
     prompt=prompt_template
 )
 
@@ -51,18 +51,18 @@ def search_qa(query: input_question_kw):
     question = query.question
     kw = query.kw
     # キーワードを含むチャンクを選択
-    if kw != '':
+    if kw != '': # キーワード欄に入力がある場合はキーワード検索する
         tf = chunk_df['text'].str.contains(kw).to_numpy()    
         chunk_df_filtered = chunk_df[tf]
-        embeddings_array_filtered = embeddings_array[tf, :]
-    else:
+        embed_array_filtered = embed_array[tf, :]
+    else: # キーワード欄が未入力の場合
       chunk_df_filtered = chunk_df.copy()
-      embeddings_array_filtered = embeddings_array.copy()
+      embed_array_filtered = embed_array.copy()
     # 質問文をベクトル化
     query_embed_list = embeddings.embed_query(question)
     query_array = np.array(query_embed_list).reshape(1, 1536)
     # 検索対象チャンクに対してベクトル類似度を計算
-    similarity = cosine_similarity(query_array, embeddings_array_filtered)[0]
+    similarity = cosine_similarity(query_array, embed_array_filtered)[0]
     results_df = chunk_df_filtered.assign(similarity=similarity)
     # 類似度上位3件のみ
     results_df = results_df.sort_values('similarity', ascending=False).head(3)

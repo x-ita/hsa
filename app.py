@@ -16,13 +16,14 @@ st.markdown(
     '[桃太郎](https://www.aozora.gr.jp/cards/000329/files/18376_12100.html)，'
     '[赤ずきんちゃん](https://www.aozora.gr.jp/cards/001091/files/42311_15546.html)，'
     '[シンデレラ](https://www.aozora.gr.jp/cards/001239/files/46348_23182.html)，'
-    '[マッチ売りの少女](https://www.aozora.gr.jp/cards/000019/files/194_23024.html)'
-)
-
-question = st.text_input(
+    '[マッチ売りの少女](https://www.aozora.gr.jp/cards/000019/files/194_23024.html)  \n  \n'
     '上記の昔話・童話の内容についての質問を入力してください．'
     '本文の要約または本文を500字以内に分割したテキストをベクトル検索し，'
     '類似度上位3件について質問に対する回答を生成します．'
+)
+
+question = st.text_input(
+    '例：「おじいさんが飼っていた犬の名前は？」「誰と誰が結婚しましたか？」'
 )
 kw = st.text_input(
     'キーワードを入力してください（任意）．'

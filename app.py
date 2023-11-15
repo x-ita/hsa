@@ -19,8 +19,15 @@ st.markdown(
     '[マッチ売りの少女](https://www.aozora.gr.jp/cards/000019/files/194_23024.html)'
 )
 
-question = st.text_input('上記の昔話・童話の内容についての質問を入力してください．本文の要約または本文を1000文字以内に分割したテキストをベクトル検索し，類似度上位3件について質問に対する回答を生成します．')
-kw = st.text_input('キーワードを入力してください（任意）．キーワードを含むテキストのみ検索対象になります．')
+question = st.text_input(
+    '上記の昔話・童話の内容についての質問を入力してください．'
+    '本文の要約または本文を1000文字以内に分割したテキストをベクトル検索し，'
+    '類似度上位3件について質問に対する回答を生成します．'
+)
+kw = st.text_input(
+    'キーワードを入力してください（任意）．'
+    'キーワードを含むテキストのみ検索対象になります．'
+)
 
 input_dict = {
     'question': question,
@@ -28,13 +35,15 @@ input_dict = {
 }
 
 if st.button('Submit'):
-  # 類似度計算を実行し上位3件を取得(FastAPI)
-  response = requests.post(fastapi_url, json=input_dict) # 引数jsonでなぜかdict型を渡す
-  response_df = pd.read_json(response.json(), orient="records")
-  # チャンクに基づく質問応答の表示
-  for i, row in response_df.iterrows():
-    st.write('\n\n回答 ' + str(i+1) + '：  \n' + row['answer'])
-    st.write('\n\nファイル（作品）：\n' + row['title_author'])
-    st.write('\n\n類似度：\n' + str(round(row['similarity'], 3)))
-    st.write('\n\nテキスト：\n' + row['text'])
+    # 類似度計算を実行し上位3件を取得(FastAPI)
+    response = requests.post(fastapi_url, json=input_dict) # 引数jsonでなぜかdict型を渡す
+    response_df = pd.read_json(response.json(), orient="records")
+    # チャンクに基づく質問応答の表示
+    for i, row in response_df.iterrows():
+        st.markdown(
+            '回答 ' + str(i+1) + '：&ensp;  \n' + row['answer']) + ' \n  \n'
+            'ファイル（作品）：&ensp;' + row['title_author']) + '  \n  \n'
+            '類似度：&ensp;' + str(round(row['similarity'], 3))) + '  \n  \n'
+            'テキスト：&ensp;' + row['text']) + '  \n'
+        )
   

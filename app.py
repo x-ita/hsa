@@ -37,12 +37,14 @@ input_dict = {
 if st.button('Submit'):
     # 類似度計算を実行し上位3件を取得(FastAPI)
     response = requests.post(fastapi_url, json=input_dict) # 引数jsonでなぜかdict型を渡す
-    response_df = pd.read_json(response.json(), orient="records")
+    response_df = pd.read_json(response.json(), orient="records").reset_index(drop=True)
     # チャンクに基づく質問応答の表示
     for i, row in response_df.iterrows():
-        st.write('\n\n回答 ' + str(i+1) + '：  \n' + row['answer'])
-        st.write('\n\nファイル（作品）：\n' + row['title_author'])
-        st.write('\n\n類似度：\n' + str(round(row['similarity'], 3)))
-        st.write('\n\nテキスト：\n' + row['text'])
+        st.write(
+            '回答 ' + str(i+1) + '：  \n' + row['answer'] + \
+            '\n\nファイル（作品）：\n' + row['title_author'] + \
+            '\n\n類似度：\n' + str(round(row['similarity'], 3)) + \
+            '\n\nテキスト：\n' + row['text']
+        )
 
   

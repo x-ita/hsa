@@ -39,8 +39,8 @@ if st.button('Submit'):
 #    response = requests.post(fastapi_url, json=input_dict) # 引数jsonでなぜかdict型を渡す
 #    response_df = pd.read_json(response.json(), orient="records")
     # チャンクに基づく質問応答の表示
-    for i, row in response_df.iterrows():
-        st.markdown(question)
+    st.markdown(question)
+#    for i, row in response_df.iterrows():
 #        st.markdown(
 #            '回答 ' + str(i+1) + '：&ensp;  \n' + row['answer'] + ' \n  \n'
 #            'ファイル（作品）：&ensp;' + row['title_author'] + '  \n  \n'

@@ -41,9 +41,9 @@ if st.button('Submit'):
     # チャンクに基づく質問応答の表示
     for i, row in response_df.iterrows():
         st.markdown(
-            '回答 ' + str(i+1) + '：&ensp;  \n' + row['answer']) + ' \n  \n'
-            'ファイル（作品）：&ensp;' + row['title_author']) + '  \n  \n'
-            '類似度：&ensp;' + str(round(row['similarity'], 3))) + '  \n  \n'
-            'テキスト：&ensp;' + row['text']) + '  \n'
+            '回答 ' + str(i+1) + '：&ensp;  \n' + row['answer'] + ' \n  \n'
+            'ファイル（作品）：&ensp;' + row['title_author'] + '  \n  \n'
+            '類似度：&ensp;' + str(round(row['similarity'], 3)) + '  \n  \n'
+            'テキスト：&ensp;' + row['text'] + '  \n'
         )
   

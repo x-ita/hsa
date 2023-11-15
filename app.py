@@ -17,7 +17,7 @@ st.markdown(
     '[赤ずきんちゃん](https://www.aozora.gr.jp/cards/001091/files/42311_15546.html)，'
     '[シンデレラ](https://www.aozora.gr.jp/cards/001239/files/46348_23182.html)，'
     '[マッチ売りの少女](https://www.aozora.gr.jp/cards/000019/files/194_23024.html)'
-    )
+)
 
 question = st.text_input('上記の昔話・童話の内容についての質問を入力してください．本文の要約または本文を1000文字以内に分割したテキストをベクトル検索し，類似度上位3件について質問に対する回答を生成します．')
 kw = st.text_input('キーワードを入力してください（任意）．キーワードを含むテキストのみ検索対象になります．')
@@ -25,7 +25,7 @@ kw = st.text_input('キーワードを入力してください（任意）．キ
 input_dict = {
     'question': question,
     'kw': kw
-    }
+}
 
 if st.button('Submit'):
   # 類似度計算を実行し上位3件を取得(FastAPI)

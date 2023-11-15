@@ -26,11 +26,11 @@ prompt_template = ChatPromptTemplate.from_messages([
     ("human", "下記テキストに基づいて質問に回答してください．" + \
               "必要な情報がテキストに書かれていない場合はわからないと答えること．\n" + \
               "### テキスト\n{context}\n### 質問\n{question}"),
-    ])
+])
 llm_chain = LLMChain(
     llm=chat_model, 
     prompt=prompt_template
-    )
+)
 
 # FastAPIインスタンス化
 app = FastAPI()

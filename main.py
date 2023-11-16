@@ -36,9 +36,13 @@ llm_chain = LLMChain(
 app = FastAPI()
 
 # 入力するデータ型の定義
-class input_question_kw(BaseModel):
+class question_kw(BaseModel):
     question: str
     kw: str
+
+class context_question(BaseModel):
+    context: str
+    question: str
 
 # トップページ
 @app.get('/')
@@ -46,8 +50,43 @@ def index():
     return {"ファイル検索": '質問に対してファイルを検索しその内容に基づいて回答する'}
 
 # POST が送信された時
+@app.post('/vector_kw_search')
+def vector_kw_search(query: question_kw):
+    question = query.question
+    kw = query.kw
+    # キーワードを含むチャンクを選択
+    if kw != '': # キーワード欄に入力がある場合はキーワード検索する
+        tf = chunk_df['text'].str.contains(kw).to_numpy()    
+        chunk_df_filtered = chunk_df[tf]
+        embed_array_filtered = embed_array[tf, :]
+    else: # キーワード欄が未入力の場合
+      chunk_df_filtered = chunk_df.copy()
+      embed_array_filtered = embed_array.copy()
+    # 質問文をベクトル化
+    query_embed_list = embeddings.embed_query(question)
+    query_array = np.array(query_embed_list).reshape(1, 1536)
+    # 検索対象チャンクに対してベクトル類似度を計算
+    similarity = cosine_similarity(query_array, embed_array_filtered)[0]
+    results_df = chunk_df_filtered.assign(similarity=similarity)
+    # 類似度上位3件のみ
+    results_df = results_df.sort_values('similarity', ascending=False).head(3)
+
+    # 結果をJSONにして返す
+    return results_df.to_json()
+
+@app.post('/llm_qa')
+def llm_qa(context_question: context_question):
+    context = context_question.context
+    question = context_question.question
+    answer = llmResponse(context=context, question=question)
+    # 結果をJSONにして返す
+    results_json = json.dumps({'answer': answer})
+    return results_json
+
+if False:
+    '''
 @app.post('/search_qa')
-def search_qa(query: input_question_kw):
+def search_qa(query: question_kw):
     question = query.question
     kw = query.kw
     # キーワードを含むチャンクを選択
@@ -76,3 +115,4 @@ def search_qa(query: input_question_kw):
     results_json = results_df.to_json()
     
     return results_json
+    '''

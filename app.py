@@ -48,7 +48,7 @@ if st.button('Submit'):
             'question': input_question
         }
         response = requests.post(fastapi_url + 'llm_qa', json=input_context_question)
-        answer_text = json.loads(response.json())['answer']
+        answer_text = response.json()# json.loads(response.json())['answer']
         st.write('\n\n回答：' + str(i+1) + '\n' + answer_text)
         st.write('\n\nテキスト：\n' + input_context)
         st.write('\n\nファイル（作品）：\n' + row['title_author'])

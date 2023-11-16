@@ -82,37 +82,3 @@ def llm_qa(context_question: context_question):
     # 結果をJSONにして返す
     results_json = json.dumps({'answer': answer})
     return results_json
-
-if False:
-    '''
-@app.post('/search_qa')
-def search_qa(query: question_kw):
-    question = query.question
-    kw = query.kw
-    # キーワードを含むチャンクを選択
-    if kw != '': # キーワード欄に入力がある場合はキーワード検索する
-        tf = chunk_df['text'].str.contains(kw).to_numpy()    
-        chunk_df_filtered = chunk_df[tf]
-        embed_array_filtered = embed_array[tf, :]
-    else: # キーワード欄が未入力の場合
-      chunk_df_filtered = chunk_df.copy()
-      embed_array_filtered = embed_array.copy()
-    # 質問文をベクトル化
-    query_embed_list = embeddings.embed_query(question)
-    query_array = np.array(query_embed_list).reshape(1, 1536)
-    # 検索対象チャンクに対してベクトル類似度を計算
-    similarity = cosine_similarity(query_array, embed_array_filtered)[0]
-    results_df = chunk_df_filtered.assign(similarity=similarity)
-    # 類似度上位3件のみ
-    results_df = results_df.sort_values('similarity', ascending=False).head(3)
-    # 上位3件それぞれについて質問応答
-    ans_list = []
-    for context in results_df['text']:
-      ans = llm_chain.run(context=context, question=question)
-      ans_list.append(ans)
-    # 結果をJSONにして返す
-    results_df = results_df.assign(answer=ans_list)    
-    results_json = results_df.to_json()
-    
-    return results_json
-    '''

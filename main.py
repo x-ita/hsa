@@ -78,7 +78,7 @@ def vector_kw_search(query: question_kw):
 def llm_qa(context_question: context_question):
     context = context_question.context
     question = context_question.question
-    answer = llmResponse(context=context, question=question)
+    answer = llm_chain.run(context=context, question=question)
     # 結果をJSONにして返す
     results_json = json.dumps({'answer': answer})
     return results_json

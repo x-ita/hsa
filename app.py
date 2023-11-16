@@ -38,12 +38,18 @@ input_question_kw = {
 
 if st.button('Submit'):
     # 類似度計算を実行し上位3件を取得(FastAPI)
-    response = requests.post(fastapi_url, json=input_question_kw) # 引数jsonになぜかdict型を渡す
+    response = requests.post(fastapi_url + 'vector_search', json=input_question_kw) # 引数jsonになぜかdict型を渡す
     response_df = pd.DataFrame(json.loads(response.json())).reset_index(drop=True)
     # チャンクに基づく質問応答の表示
     for i, row in response_df.iterrows():
-        st.write('\n\n回答：' + str(i+1) + '\n' + row['answer'])
-        st.write('\n\nテキスト：\n' + row['text'])
+        input_context = row['text']
+        input_context_question = {
+            'context': input_context,
+            'question': input_question
+        response = requests.post(fastapi_url + 'llm_qa', json=input_context_question)
+        answer_text = json.loads(response.json())['answer']
+        st.write('\n\n回答：' + str(i+1) + '\n' + answer_text)
+        st.write('\n\nテキスト：\n' + input_context)
         st.write('\n\nファイル（作品）：\n' + row['title_author'])
         st.write('\n\n類似度：\n' + str(round(row['similarity'], 3)))
 

@@ -48,7 +48,7 @@ if st.button('Submit'):
             'question': input_question
         }
         response = requests.post(fastapi_url + 'llm_qa', json=input_context_question)
-        answer_text = response.json()# json.loads(response.json())['answer']
+        answer_text = json.loads(response.json())['answer']
         st.markdown('##### 回答' + str(i+1) + '\n')
         st.write(answer_text)
         st.write('テキスト：\n' + input_context)

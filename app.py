@@ -38,7 +38,7 @@ input_question_kw = {
 
 if st.button('Submit'):
     # 類似度計算を実行し上位3件を取得(FastAPI)
-    response = requests.post(fastapi_url + 'vector_search', json=input_question_kw) # 引数jsonになぜかdict型を渡す
+    response = requests.post(fastapi_url + 'vector_kw_search', json=input_question_kw) # 引数jsonになぜかdict型を渡す
     response_df = pd.DataFrame(json.loads(response.json())).reset_index(drop=True)
     # チャンクに基づく質問応答の表示
     for i, row in response_df.iterrows():

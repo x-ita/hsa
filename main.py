@@ -8,6 +8,7 @@ from langchain.utils.math import cosine_similarity
 import pandas as pd
 import numpy as np
 import pickle
+import json
 
 # OpenAIEmbeddingsインスタンス作成
 embeddings = OpenAIEmbeddings(model='text-embedding-ada-002')

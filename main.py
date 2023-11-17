@@ -77,13 +77,10 @@ def vector_kw_search(query: question_kw):
 
 @app.post('/llm_qa')
 def llm_qa(query: context_question):
-    if query.question == '':
-        answer_text = '質問が未入力です．'
-    else:
-        answer_text = llm_chain.run(
-            context=query.context,
-            question=query.question
-        )
+    answer_text = llm_chain.run(
+        context=query.context,
+        question=query.question
+    )
     # 結果をJSONで返す
     results_json = json.dumps({'answer': answer_text})
     return results_json

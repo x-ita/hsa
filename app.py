@@ -31,26 +31,26 @@ input_kw = st.text_input(
     'キーワードを含むテキストのみベクトル検索の対象になります．'
 )
 
-question_kw_dict = {
-    'question': input_question,
-    'kw': input_kw
-}
 
-if st.button('Submit'):
+if st.button('Submit') and input_question != '':
     # 類似度計算を実行し上位3件を取得(FastAPI)
+    question_kw_dict = {
+        'question': input_question,
+        'kw': input_kw
+    }
     response = requests.post(fastapi_url + 'vector_kw_search', json=question_kw_dict) # 引数jsonになぜかdict型を渡す
     response_df = pd.DataFrame(json.loads(response.json())).reset_index(drop=True)
     # チャンクに基づく質問応答の表示
     for i, row in response_df.iterrows():
-        input_context = row['text']
+        context = row['text']
         context_question_dict = {
-            'context': input_context,
+            'context': context,
             'question': input_question
         }
         response = requests.post(fastapi_url + 'llm_qa', json=context_question_dict)
         answer_text = json.loads(response.json())['answer']
         st.markdown('##### 回答' + str(i+1) + ':&nbsp;&nbsp;' + answer_text, unsafe_allow_html=True)
-        st.write('テキスト：\n' + input_context)
+        st.write('テキスト：\n' + context)
         st.write('ファイル（作品）：\n' + row['title_author'])
         st.write('類似度：\n' + str(round(row['similarity'], 3)))
 

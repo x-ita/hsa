@@ -49,7 +49,7 @@ if st.button('Submit'):
         }
         response = requests.post(fastapi_url + 'llm_qa', json=context_question_dict)
         answer_text = json.loads(response.json())['answer']
-        st.markdown('##### 回答' + str(i+1) + ':  ' + answer_text)
+        st.markdown('##### 回答' + str(i+1) + ':&nbsp;&nbsp;' + answer_text)
         st.write('テキスト：\n' + input_context)
         st.write('ファイル（作品）：\n' + row['title_author'])
         st.write('類似度：\n' + str(round(row['similarity'], 3)))

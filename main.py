@@ -66,21 +66,24 @@ def vector_kw_search(query: question_kw):
     # 質問文をベクトル化
     query_embed_list = embeddings.embed_query(question)
     query_array = np.array(query_embed_list).reshape(1, 1536)
-    # 検索対象チャンクに対してベクトル類似度を計算
+    # ベクトルストアに対してベクトル類似度を計算
     similarity = cosine_similarity(query_array, embed_array_filtered)[0]
     results_df = chunk_df_filtered.assign(similarity=similarity)
     # 類似度上位3件のみ
     results_df = results_df.sort_values('similarity', ascending=False).head(3)
 
-    # 結果をJSONにして返す
+    # 結果をJSONで返す
     return results_df.to_json()
 
 @app.post('/llm_qa')
 def llm_qa(query: context_question):
-    answer_text = llm_chain.run(
-        context=query.context,
-        question=query.question
-    )
-    # 結果をJSONにして返す
+    if query.question == '':
+        answer_text = '質問が未入力です．'
+    else:
+        answer_text = llm_chain.run(
+            context=query.context,
+            question=query.question
+        )
+    # 結果をJSONで返す
     results_json = json.dumps({'answer': answer_text})
     return results_json
